@@ -20,6 +20,7 @@ namespace Employees.Data.Models
         public EmployeeItem(string name, string surname, DateTime dateOfBirth, string oib, RoleEnums role)
         {
             ProjectsOfEmployee=new List<string>();
+            WorkingHours = 0;
             Name = name;
             Surname = surname;
             DateOfBirth = dateOfBirth;

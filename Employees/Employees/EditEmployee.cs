@@ -16,9 +16,11 @@ namespace Employees
     {
         public EmployeeItem Employee;
         private List<ProjectItem> _projectItems;
+        public List<int> Hours; 
         public EditEmployee(EmployeeItem employeeItem, List<ProjectItem> projects)
         {
             InitializeComponent();
+            Hours=new List<int>();
             cmbPositions.DataSource = Enum.GetValues(typeof(RoleEnums));
             Employee = employeeItem;
             _projectItems = projects;
@@ -65,9 +67,14 @@ namespace Employees
                         if (project.ProjectName == checkedItem.ToString())
                         {
                             Employee.ProjectsOfEmployee.Add(project.ProjectName);
-                            //NewEmployee.CalculatingHours(project.WorkingHours);
                         }
                     }
+                }
+                foreach (var project in Employee.ProjectsOfEmployee)
+                {                  
+                    var hoursForm = new AddHours(project);
+                    hoursForm.ShowDialog();
+                    Hours.Add(hoursForm.Hours);
                 }
             }
             else

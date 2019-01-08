@@ -58,11 +58,23 @@
     <Compile Include="AddForm.Designer.cs">
       <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddHours.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddHours.Designer.cs">
+      <DependentUpon>AddHours.cs</DependentUpon>
+    </Compile>
     <Compile Include="DetailEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DetailEmployee.Designer.cs">
       <DependentUpon>DetailEmployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetailProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailProject.Designer.cs">
+      <DependentUpon>DetailProject.cs</DependentUpon>
     </Compile>
     <Compile Include="EditEmployee.cs">
       <SubType>Form</SubType>
@@ -90,8 +102,14 @@
     <EmbeddedResource Include="AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AddHours.resx">
+      <DependentUpon>AddHours.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DetailEmployee.resx">
       <DependentUpon>DetailEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetailProject.resx">
+      <DependentUpon>DetailProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditEmployee.resx">
       <DependentUpon>EditEmployee.cs</DependentUpon>

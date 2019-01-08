@@ -11,18 +11,18 @@ namespace Employees.Data.Models
     {
         public string ProjectName { get; set; }
         public List<EmployeeItem> ListOfEmployees{ get; set; }
-        public int WorkingHours { get; set; }
+        public List<Tuple<EmployeeItem, int>> EmployeesWithHours { get; set; }
         public DateTime DateOfBeginning { get; set; }
         public DateTime DateOfEnd { get; set; }
         public string StatusOfProject { get; set; }
 
-        public ProjectItem(string projectName, DateTime dateOfBeginning, DateTime dateOfEnd, int workingHours)
+        public ProjectItem(string projectName, DateTime dateOfBeginning, DateTime dateOfEnd)
         {
             ListOfEmployees=new List<EmployeeItem>();
+            EmployeesWithHours=new List<Tuple<EmployeeItem, int>>();
             ProjectName = projectName;
             DateOfBeginning = dateOfBeginning;
             DateOfEnd = dateOfEnd;
-            WorkingHours = workingHours;
             StatusOfProject = IsDone();
         }
 
@@ -66,15 +66,8 @@ namespace Employees.Data.Models
 
         public override string ToString()
         {
-            var text = $"Ime: {ProjectName}, Zaposlenici:";
-            foreach (var employee in ListOfEmployees)
-            {
-                text +=
-                     $"{employee}";
-                employee.CalculatingHours(WorkingHours);
-            }
-
-            text += $"Beginning {DateOfBeginning.ToString("dd-MM-yyyy")}, End: {DateOfEnd.ToString("dd-MM-yyyy")}";
+            var text = $"Ime: {ProjectName}, Zaposlenici: {ListOfEmployees.Count()},"
+            +$" Pocetak {DateOfBeginning.ToString("dd-MM-yyyy")}, Kraj: {DateOfEnd.ToString("dd-MM-yyyy")}";
             return text;
         }
     }

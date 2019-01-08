@@ -26,9 +26,13 @@ namespace Employees
             _projectItemRepository = new ProjectItemRepository();
             AddRefreshListView();
             ProjectItems[0].ListOfEmployees.Add(EmployeeItems[0]);
+            ProjectItems[0].EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(EmployeeItems[0], 10));
             ProjectItems[1].ListOfEmployees.Add(EmployeeItems[1]);
+            ProjectItems[1].EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(EmployeeItems[1], 15));
             EmployeeItems[0].ProjectsOfEmployee.Add(ProjectItems[0].ProjectName);
             EmployeeItems[1].ProjectsOfEmployee.Add(ProjectItems[1].ProjectName);
+            EmployeeItems[0].WorkingHours = 10;
+            EmployeeItems[1].WorkingHours = 15;
         }
 
         public void AddRefreshListView()
@@ -61,22 +65,14 @@ namespace Employees
 
         private void BtnProjects_Click(object sender, EventArgs e)
         {
-            var projects = new ListOfProjects(ProjectItems, EmployeeItems);
+            var projects = new ListOfProjects(ProjectItems, EmployeeItems, _employeeItemRepository,_projectItemRepository);
             projects.ShowDialog();
             ProjectItems = projects.ListofProjectItems;
+            AddRefreshListView();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            foreach (var employeeItem in EmployeeItems)
-            {
-                MessageBox.Show(employeeItem.Name + employeeItem.ProjectsOfEmployee.Count().ToString());
-
-            }
-            foreach (var employeeItem in ProjectItems)
-            {
-                MessageBox.Show(employeeItem.ProjectName + employeeItem.ListOfEmployees.Count().ToString());
-            }
             var countItems = chkEmployess.Items.Count;
             var addingEmployee = new AddEmployee(ProjectItems);
             addingEmployee.ShowDialog();
@@ -90,6 +86,7 @@ namespace Employees
             }
             else
             {
+                var i = 0;
                 foreach (var project in addingEmployee.NewEmployee.ProjectsOfEmployee)
                 {
                     foreach (var projectAll in ProjectItems)
@@ -97,6 +94,8 @@ namespace Employees
                         if (projectAll.ProjectName == project)
                         {
                             projectAll.ListOfEmployees.Add(addingEmployee.NewEmployee);
+                            projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(addingEmployee.NewEmployee,addingEmployee.Hours[i]));
+                            i++;
                         }
                     }
                 }
@@ -116,6 +115,11 @@ namespace Employees
                     {
                         _employeeItemRepository.Delete(selectedPerson.Oib);
                         project.ListOfEmployees.Remove(selectedPerson);
+                        foreach (var employeeWithHours in project.EmployeesWithHours)
+                        {
+                            if (employeeWithHours.Item1 == selectedPerson)
+                                project.EmployeesWithHours.Remove(employeeWithHours);
+                        }
                         EmployeeItems.Remove(selectedPerson);
                     }
                     else
@@ -139,6 +143,19 @@ namespace Employees
             var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems, _employeeItemRepository);
             detailsEmployee.ShowDialog();
             CountingProjectsAfterEdit(selectedPerson, detailsEmployee.Employee, detailsEmployee.Employee.ProjectsOfEmployee);
+            var i = 0;
+            foreach (var project in detailsEmployee.Employee.ProjectsOfEmployee)
+            {
+                foreach (var projectAll in ProjectItems)
+                {
+                    if (projectAll.ProjectName == project)
+                    {
+                        projectAll.ListOfEmployees.Add(detailsEmployee.Employee);
+                        projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(detailsEmployee.Employee, detailsEmployee.Hours[i]));
+                        i++;
+                    }
+                }
+            }
             AddRefreshListView();
         }
 
@@ -150,6 +167,19 @@ namespace Employees
             editTodo.ShowDialog();
             _employeeItemRepository.Edit(editTodo.Employee);
             CountingProjectsAfterEdit(selectedPerson, editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
+            var i = 0;
+            foreach (var project in editTodo.Employee.ProjectsOfEmployee)
+            {
+                foreach (var projectAll in ProjectItems)
+                {
+                    if (projectAll.ProjectName == project)
+                    {
+                        projectAll.ListOfEmployees.Add(editTodo.Employee);
+                        projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(editTodo.Employee, editTodo.Hours[i]));
+                        i++;
+                    }
+                }
+            }
             AddRefreshListView();
         }
 
@@ -160,12 +190,21 @@ namespace Employees
                 foreach (var project in ProjectItems)
                 {
                     if (project.ListOfEmployees.Contains(selectedPerson))
+                    {
+                        foreach (var employeeWithHours in project.EmployeesWithHours)
+                        {
+                            if (employeeWithHours.Item1 == selectedPerson)
+                                project.EmployeesWithHours.Remove(employeeWithHours);
+                        }
                         project.ListOfEmployees.Remove(selectedPerson);
+                    }
+
                     if (project.ProjectName == checkedItem.ToString())
                     {
                         if (!project.ListOfEmployees.Contains(employee))
+                        {
                             project.ListOfEmployees.Add(employee);
-                        //NewEmployee.CalculatingHours(project.WorkingHours);
+                        }
                     }
                 }
             }
@@ -178,6 +217,5 @@ namespace Employees
                 }
             }
         }
-
     }
 }

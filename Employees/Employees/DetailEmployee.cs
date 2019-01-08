@@ -16,11 +16,13 @@ namespace Employees
     public partial class DetailEmployee : Form
     {
         private List<ProjectItem> _projectItems;
+        public List<int> Hours;
         public EmployeeItem Employee;
         private EmployeeItemRepository _employeeItemRepository;
         public DetailEmployee(EmployeeItem selectedEmployee, List<ProjectItem> projects, EmployeeItemRepository employeeItemRepository)
         {
             InitializeComponent();
+            Hours=new List<int>();
             _projectItems = projects;
             Employee = selectedEmployee;
             _employeeItemRepository = employeeItemRepository;
@@ -30,6 +32,14 @@ namespace Employees
             lstDetails.Items.Add($"Zaposlenik je završio: {listOfProjects[0]}");
             lstDetails.Items.Add($"Zaposlenik radi na: {listOfProjects[1]}");
             lstDetails.Items.Add($"Zaposlenik će raditi na: {listOfProjects[2]}");
+            lstDetails.Items.Add($"Ovaj tjedan radi: {Employee.WorkingHours} sati");
+            if (Employee.WorkingHours < 30)
+                btnEdit.BackColor = Color.Yellow;
+            else if (Employee.WorkingHours < 41)
+                btnEdit.BackColor = Color.Green;
+            else
+                btnEdit.BackColor = Color.Red;
+
         }
 
         public List<int> Projects()
@@ -44,7 +54,14 @@ namespace Employees
                         if (projectInProjects.StatusOfProject == "gotov")
                             listPastProgressFutureProject[0]++;
                         else if (projectInProjects.StatusOfProject == "sadasnji")
+                        {
                             listPastProgressFutureProject[1]++;
+                            foreach (var employee in projectInProjects.EmployeesWithHours)
+                            {
+                                if (employee.Item1 == Employee)
+                                    Employee.WorkingHours += employee.Item2;
+                            }
+                        }
                         else
                             listPastProgressFutureProject[2]++;
                     }
@@ -58,6 +75,7 @@ namespace Employees
             var editTodo = new EditEmployee(Employee, _projectItems);
             editTodo.ShowDialog();
             _employeeItemRepository.Edit(editTodo.Employee);
+            Hours = editTodo.Hours;
             Close();
         }
     }

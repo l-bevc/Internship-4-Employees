@@ -16,6 +16,7 @@ namespace Employees
     public partial class AddEmployee : Form
     {
         public EmployeeItem NewEmployee;
+        public List<int> Hours;
         private List<ProjectItem> _projectItems;
         public AddEmployee(List<ProjectItem> projects)
         {
@@ -23,6 +24,7 @@ namespace Employees
             cmbPositions.DataSource = Enum.GetValues(typeof(RoleEnums));
             cmbPositions.SelectedItem = RoleEnums.Tajnik;
             _projectItems = projects;
+            Hours=new List<int>();
             foreach (var project in _projectItems)
             {
                 chkProjects.Items.Add(project.ProjectName);
@@ -50,10 +52,16 @@ namespace Employees
                             if (project.ProjectName == checkedItem.ToString())
                             {
                                 NewEmployee.ProjectsOfEmployee.Add(project.ProjectName);
-                                //NewEmployee.CalculatingHours(project.WorkingHours);
                             }
                         }
                     }
+                }
+
+                foreach (var project in NewEmployee.ProjectsOfEmployee)
+                {
+                    var hoursForm= new AddHours(project);
+                    hoursForm.ShowDialog();
+                    Hours.Add(hoursForm.Hours);
                 }
             }
             else

@@ -51,6 +51,7 @@
             this.btnDetails.TabIndex = 1;
             this.btnDetails.Text = "Detalji";
             this.btnDetails.UseVisualStyleBackColor = true;
+            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
             // 
             // btnAdd
             // 

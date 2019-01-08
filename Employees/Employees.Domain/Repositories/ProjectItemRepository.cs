@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Employees.Data.Models;
+using Employess.Infrastructure.Extensions;
 
 namespace Employees.Domain.Repositories
 {
@@ -17,8 +18,8 @@ namespace Employees.Domain.Repositories
             
             ProjectItems = new List<ProjectItem>()
             {
-                new ProjectItem("DUMP Days", new DateTime(1995,12,10), new DateTime(1999,12,05), 30),
-                new ProjectItem("DUMP Internship", new DateTime(2010,12,10), new DateTime(2020,12,05), 30)
+                new ProjectItem("DUMP Days", new DateTime(1995,12,10), new DateTime(1999,12,05)),
+                new ProjectItem("DUMP Internship", new DateTime(2010,12,10), new DateTime(2020,12,05))
             };
         }
         public List<ProjectItem> GetAllProjectItems()
@@ -33,7 +34,8 @@ namespace Employees.Domain.Repositories
 
         public void Add(ProjectItem projectToAdd)
         {
-            ProjectItems.Add(projectToAdd);
+                ProjectItems.Add(projectToAdd);
+                ProjectNames.Add(projectToAdd.ProjectName);
         }
 
         public bool Edit(ProjectItem projectItemToEdit)
