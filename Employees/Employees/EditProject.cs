@@ -12,7 +12,6 @@ using Employess.Infrastructure.Extensions;
 
 namespace Employees
 {
-    //edit project pogledat 
     public partial class EditProject : Form
     {
         public bool Quit { get; set; }
@@ -67,9 +66,12 @@ namespace Employees
                             employee.WorkingHours = hoursForm.Hours;
                             NewProject.ListOfProjectOfEmployee();
                             NewProject.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(employee, hoursForm.Hours));
+
                         }
                     }
                 }
+
+                
             }
             else
             {

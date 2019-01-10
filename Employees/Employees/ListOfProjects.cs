@@ -14,14 +14,14 @@ namespace Employees
 {
     public partial class ListOfProjects : Form
     {
-        private ProjectItemRepository _projectItemRepository;
+        public bool Back { get; set; }
         internal List<ProjectItem> ListofProjectItems { get; set; }
         internal List<EmployeeItem> ListOfEmployeeItems { get; set; }
 
-        public ListOfProjects(List<ProjectItem> listOfProjectItems, List<EmployeeItem>listOfEmployeeItems,ProjectItemRepository projectItemRepository)
+        public ListOfProjects(List<ProjectItem> listOfProjectItems, List<EmployeeItem>listOfEmployeeItems)
         {
             InitializeComponent();
-            _projectItemRepository = projectItemRepository;
+            Back = false;
             ListofProjectItems = listOfProjectItems;
             ListOfEmployeeItems = listOfEmployeeItems;
             AddRefreshListView();
@@ -30,7 +30,7 @@ namespace Employees
         private void AddRefreshListView()
         {
             chkProjects.Items.Clear();           
-            ListofProjectItems = _projectItemRepository.GetAllProjectItems();
+            ListofProjectItems = StatusOfEmployeesAndProjects.ProjectItemRepository.GetAllProjectItems();
             foreach (var item in ListofProjectItems)
             {
                 chkProjects.Items.Add(item);
@@ -43,7 +43,7 @@ namespace Employees
             itemToAdd.ShowDialog();
             if (!itemToAdd.Quit)
             {
-                _projectItemRepository.Add(itemToAdd.NewProject);
+                StatusOfEmployeesAndProjects.ProjectItemRepository.Add(itemToAdd.NewProject);
                 AddRefreshListView();
             }
         }
@@ -63,7 +63,7 @@ namespace Employees
             var dialogResult = MessageBox.Show("Jesi li siguran", "Oprez", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                _projectItemRepository.Delete(selectedProject.ProjectName);
+                StatusOfEmployeesAndProjects.ProjectItemRepository.Delete(selectedProject.ProjectName);
                 foreach (var employee in selectedProject.ListOfEmployees)
                 {
                     employee.ProjectsOfEmployee.Remove(selectedProject.ProjectName);
@@ -87,9 +87,16 @@ namespace Employees
             editTodo.ShowDialog();
             if (!editTodo.Quit)
             {
-                _projectItemRepository.Edit(editTodo.ProjectItem);
+                StatusOfEmployeesAndProjects.ProjectItemRepository.Edit(editTodo.ProjectItem);
                 AddRefreshListView();
             }
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Back = true;
+            AddRefreshListView();
+            Close();
         }
     }
 }

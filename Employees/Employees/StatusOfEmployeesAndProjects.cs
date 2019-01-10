@@ -17,13 +17,13 @@ namespace Employees
     {
         public List<ProjectItem> ProjectItems { get; set; }
         public List<EmployeeItem> EmployeeItems { get; set; }
-        private EmployeeItemRepository _employeeItemRepository;
-        private ProjectItemRepository _projectItemRepository;
+        public static EmployeeItemRepository EmployeeItemRepository;
+        public static ProjectItemRepository ProjectItemRepository;
         public StatusOfEmployeesAndProjects()
         {
             InitializeComponent();
-            _employeeItemRepository = new EmployeeItemRepository();
-            _projectItemRepository = new ProjectItemRepository();
+            EmployeeItemRepository = new EmployeeItemRepository();
+            ProjectItemRepository = new ProjectItemRepository();
             AddRefreshListView();
             ProjectItems[0].ListOfEmployees.Add(EmployeeItems[0]);
             ProjectItems[0].EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(EmployeeItems[0], 10));
@@ -39,26 +39,26 @@ namespace Employees
         public void AddRefreshListView()
         {
             chkEmployess.Items.Clear();
-            EmployeeItems = _employeeItemRepository.GetAllEmployeeItems();
-            ProjectItems = _projectItemRepository.GetAllProjectItems();
+            EmployeeItems = EmployeeItemRepository.GetAllEmployeeItems();
+            ProjectItems = ProjectItemRepository.GetAllProjectItems();
             foreach (var employeeItem in EmployeeItems)
             {
                 chkEmployess.Items.Add(employeeItem);
             }
             foreach (var employee in EmployeeItems)
             {
-                if (!_employeeItemRepository.EmployeeOibs.Contains(employee.Oib.TrimAndRemoveMultipleWhitespaces()))
+                if (!EmployeeItemRepository.EmployeeOibs.Contains(employee.Oib.TrimAndRemoveMultipleWhitespaces()))
                 {
-                    _employeeItemRepository.EmployeeOibs.Add(employee.Oib.TrimAndRemoveMultipleWhitespaces());
-                    _employeeItemRepository.EmployeeItems.Add(employee);
+                    EmployeeItemRepository.EmployeeOibs.Add(employee.Oib.TrimAndRemoveMultipleWhitespaces());
+                    EmployeeItemRepository.EmployeeItems.Add(employee);
                 }
             }
             foreach (var project in ProjectItems)
             {
-                if (!_projectItemRepository.ProjectNames.Contains(project.ProjectName))
+                if (!ProjectItemRepository.ProjectNames.Contains(project.ProjectName))
                 {
-                    _projectItemRepository.ProjectNames.Add(project.ProjectName);
-                    _projectItemRepository.ProjectItems.Add(project);
+                    ProjectItemRepository.ProjectNames.Add(project.ProjectName);
+                    ProjectItemRepository.ProjectItems.Add(project);
                 }
                 project.ListOfProjectOfEmployee();
             }
@@ -66,7 +66,7 @@ namespace Employees
 
         private void BtnProjects_Click(object sender, EventArgs e)
         { 
-            var projects = new ListOfProjects(ProjectItems, EmployeeItems,_projectItemRepository);
+            var projects = new ListOfProjects(ProjectItems, EmployeeItems);
             projects.ShowDialog();
             ProjectItems = projects.ListofProjectItems;
             AddRefreshListView();
@@ -79,7 +79,7 @@ namespace Employees
             addingEmployee.ShowDialog();
             if (!addingEmployee.Quit)
             {
-                _employeeItemRepository.Add(addingEmployee.NewEmployee);
+                EmployeeItemRepository.Add(addingEmployee.NewEmployee);
                 AddRefreshListView();
                 var countAfterAdding = chkEmployess.Items.Count;
                 if (countItems == countAfterAdding)
@@ -119,7 +119,7 @@ namespace Employees
                {
                     if (!project.IsOnlyEmployee(selectedPerson))
                     {
-                        _employeeItemRepository.Delete(selectedPerson.Oib);
+                        EmployeeItemRepository.Delete(selectedPerson.Oib);
                         project.ListOfEmployees.Remove(selectedPerson);
                         foreach (var employeeWithHours in project.EmployeesWithHours)
                         {
@@ -146,7 +146,7 @@ namespace Employees
         {
             var selectedPerson = chkEmployess.SelectedItem as EmployeeItem;
             if (selectedPerson == null) return;
-            var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems, _employeeItemRepository);
+            var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems, EmployeeItemRepository);
             detailsEmployee.ShowDialog();
             if (!detailsEmployee.Return)
             {
@@ -196,7 +196,7 @@ namespace Employees
                             project.EmployeesWithHours.Remove(foundTuple);
                         }
                 }
-                _employeeItemRepository.Edit(editTodo.Employee);
+                EmployeeItemRepository.Edit(editTodo.Employee);
                 CountingProjectsAfterEdit(selectedPerson, editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
                 var i = 0;
                 foreach (var project in editTodo.Employee.ProjectsOfEmployee)

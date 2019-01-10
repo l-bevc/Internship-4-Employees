@@ -19,7 +19,7 @@ namespace Employees
         private List<ProjectItem> _projectItems;
         public List<int> Hours;
         public EmployeeItem Employee;
-        private EmployeeItemRepository _employeeItemRepository;
+        private EmployeeItemRepository EmployeeItemRepository;
         public DetailEmployee(EmployeeItem selectedEmployee, List<ProjectItem> projects, EmployeeItemRepository employeeItemRepository)
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace Employees
             Hours=new List<int>();
             _projectItems = projects;
             Employee = selectedEmployee;
-            _employeeItemRepository = employeeItemRepository;
+            EmployeeItemRepository = employeeItemRepository;
             var listOfProjects = Projects();
             lstDetails.Items.Add(selectedEmployee.ToString());
             lstDetails.Items.Add("PROJEKTI:");
@@ -76,7 +76,7 @@ namespace Employees
         {
             var editTodo = new EditEmployee(Employee, _projectItems);
             editTodo.ShowDialog();
-            _employeeItemRepository.Edit(editTodo.Employee);
+            EmployeeItemRepository.Edit(editTodo.Employee);
             Hours = editTodo.Hours;
             Close();
         }
