@@ -23,7 +23,7 @@ namespace Employees
             lstDetails.Items.Add(project.ProjectName);
             lstDetails.Items.Add(project.DateOfBeginning.ToString("dd.MM.yyyy") + "-" + project.DateOfEnd.ToString("dd.MM.yyyy"));
 
-            foreach (var employee in project.ListOfEmployees)
+            foreach (var employee in project.ListOfEmployees.Distinct())
             {
                role.Add(employee.Role);
             }
@@ -43,7 +43,7 @@ namespace Employees
 
         public void ListOfEmployeeOfSomeRole(RoleEnums role)
         {
-            foreach (var employee in selectedProject.ListOfEmployees)
+            foreach (var employee in selectedProject.ListOfEmployees.Distinct())
             {
                 if (employee.Role == role)
                     foreach (var employeeHours in selectedProject.EmployeesWithHours)
@@ -54,6 +54,11 @@ namespace Employees
                         }
                     }                    
             }            
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

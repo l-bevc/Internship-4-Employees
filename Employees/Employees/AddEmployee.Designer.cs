@@ -42,6 +42,7 @@
             this.cmbPositions = new System.Windows.Forms.ComboBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.chkProjects = new System.Windows.Forms.CheckedListBox();
+            this.btnQuit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -160,11 +161,22 @@
             this.chkProjects.Size = new System.Drawing.Size(296, 154);
             this.chkProjects.TabIndex = 16;
             // 
+            // btnQuit
+            // 
+            this.btnQuit.Location = new System.Drawing.Point(470, 217);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(129, 48);
+            this.btnQuit.TabIndex = 17;
+            this.btnQuit.Text = "Odustani";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
             // AddEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(685, 450);
+            this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.chkProjects);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.cmbPositions);
@@ -202,5 +214,6 @@
         private System.Windows.Forms.ComboBox cmbPositions;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.CheckedListBox chkProjects;
+        private System.Windows.Forms.Button btnQuit;
     }
 }

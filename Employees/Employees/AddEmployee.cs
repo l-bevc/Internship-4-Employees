@@ -15,6 +15,7 @@ namespace Employees
 {
     public partial class AddEmployee : Form
     {
+        public bool Quit { get; set; }
         public EmployeeItem NewEmployee;
         public List<int> Hours;
         private List<ProjectItem> _projectItems;
@@ -33,6 +34,7 @@ namespace Employees
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Quit = false;
             var name = txtName.Text;
             var surname = txtSurname.Text;
             var oib = txtOib.Text;
@@ -70,6 +72,12 @@ namespace Employees
                 return;
             }
 
+            Close();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Quit = true;
             Close();
         }
     }

@@ -42,6 +42,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnQuit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // chkProjects
@@ -58,7 +59,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(129, 48);
             this.btnSave.TabIndex = 29;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Spremi";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -160,11 +161,22 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "Ime:";
             // 
+            // btnQuit
+            // 
+            this.btnQuit.Location = new System.Drawing.Point(535, 218);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(129, 48);
+            this.btnQuit.TabIndex = 31;
+            this.btnQuit.Text = "Odustani";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
             // EditEmployee
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.chkProjects);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.cmbPositions);
@@ -202,5 +214,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnQuit;
     }
 }

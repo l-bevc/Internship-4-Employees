@@ -14,6 +14,7 @@ namespace Employees
 {
     public partial class EditEmployee : Form
     {
+        public bool Quit { get; set; }
         public EmployeeItem Employee;
         private List<ProjectItem> _projectItems;
         public List<int> Hours; 
@@ -49,6 +50,7 @@ namespace Employees
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Quit = false;
             var name = txtName.Text;
             var surname = txtSurname.Text;
             var oib = txtOib.Text;
@@ -67,14 +69,11 @@ namespace Employees
                         if (project.ProjectName == checkedItem.ToString())
                         {
                             Employee.ProjectsOfEmployee.Add(project.ProjectName);
+                            var hoursForm = new AddHours(project.ProjectName);
+                            hoursForm.ShowDialog();
+                            Hours.Add(hoursForm.Hours);
                         }
                     }
-                }
-                foreach (var project in Employee.ProjectsOfEmployee)
-                {                  
-                    var hoursForm = new AddHours(project);
-                    hoursForm.ShowDialog();
-                    Hours.Add(hoursForm.Hours);
                 }
             }
             else
@@ -82,6 +81,12 @@ namespace Employees
                 MessageBox.Show("Unesi ime i prezime! Uz to moraš biti punoljetan!");
                 return;
             }
+            Close();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Quit = true;
             Close();
         }
     }

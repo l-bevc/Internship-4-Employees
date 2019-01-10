@@ -46,10 +46,25 @@ namespace Employees.Domain.Repositories
                 if (projectItem.ProjectName == projectItemToEdit.ProjectName)
                     itemToDelete = projectItem;
             }
-
             if (itemToDelete == null) return false;
             ProjectItems.Remove(itemToDelete);
+            ProjectNames.Remove(itemToDelete.ProjectName);
             ProjectItems.Add(projectItemToEdit);
+            ProjectNames.Add(projectItemToEdit.ProjectName);
+            return true;
+        }
+
+        public bool Delete(string name)
+        {
+            ProjectItem itemToDelete = null;
+            foreach (var projectItem in GetAllProjectItems())
+            {
+                if (projectItem.ProjectName.TrimAndRemoveMultipleWhitespaces() == name.TrimAndRemoveMultipleWhitespaces())
+                    itemToDelete = projectItem;
+            }
+            if (itemToDelete == null) return false;
+            ProjectItems.Remove(itemToDelete);
+            ProjectNames.Remove(itemToDelete.ProjectName);
             return true;
         }
 

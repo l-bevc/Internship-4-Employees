@@ -36,6 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.chkEmployees = new System.Windows.Forms.CheckedListBox();
             this.btnAddProject = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtName
@@ -104,11 +105,22 @@
             this.btnAddProject.UseVisualStyleBackColor = true;
             this.btnAddProject.Click += new System.EventHandler(this.btnAddProject_Click);
             // 
+            // btnQuit
+            // 
+            this.btnQuit.Location = new System.Drawing.Point(528, 212);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(107, 49);
+            this.btnQuit.TabIndex = 8;
+            this.btnQuit.Text = "Odustani";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 450);
+            this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnAddProject);
             this.Controls.Add(this.chkEmployees);
             this.Controls.Add(this.label3);
@@ -134,5 +146,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckedListBox chkEmployees;
         private System.Windows.Forms.Button btnAddProject;
+        private System.Windows.Forms.Button btnQuit;
     }
 }

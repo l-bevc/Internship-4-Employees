@@ -15,6 +15,7 @@ namespace Employees
 {
     public partial class DetailEmployee : Form
     {
+        public bool Return { get; set; }
         private List<ProjectItem> _projectItems;
         public List<int> Hours;
         public EmployeeItem Employee;
@@ -22,6 +23,7 @@ namespace Employees
         public DetailEmployee(EmployeeItem selectedEmployee, List<ProjectItem> projects, EmployeeItemRepository employeeItemRepository)
         {
             InitializeComponent();
+            Return = false;
             Hours=new List<int>();
             _projectItems = projects;
             Employee = selectedEmployee;
@@ -76,6 +78,12 @@ namespace Employees
             editTodo.ShowDialog();
             _employeeItemRepository.Edit(editTodo.Employee);
             Hours = editTodo.Hours;
+            Close();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Return = true;
             Close();
         }
     }

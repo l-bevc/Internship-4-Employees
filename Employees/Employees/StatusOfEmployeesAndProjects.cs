@@ -33,6 +33,7 @@ namespace Employees
             EmployeeItems[1].ProjectsOfEmployee.Add(ProjectItems[1].ProjectName);
             EmployeeItems[0].WorkingHours = 10;
             EmployeeItems[1].WorkingHours = 15;
+            AddRefreshListView();
         }
 
         public void AddRefreshListView()
@@ -64,8 +65,8 @@ namespace Employees
         }
 
         private void BtnProjects_Click(object sender, EventArgs e)
-        {
-            var projects = new ListOfProjects(ProjectItems, EmployeeItems, _employeeItemRepository,_projectItemRepository);
+        { 
+            var projects = new ListOfProjects(ProjectItems, EmployeeItems,_projectItemRepository);
             projects.ShowDialog();
             ProjectItems = projects.ListofProjectItems;
             AddRefreshListView();
@@ -76,26 +77,31 @@ namespace Employees
             var countItems = chkEmployess.Items.Count;
             var addingEmployee = new AddEmployee(ProjectItems);
             addingEmployee.ShowDialog();
-            _employeeItemRepository.Add(addingEmployee.NewEmployee);
-            AddRefreshListView();
-            var countAfterAdding = chkEmployess.Items.Count;
-            if (countItems == countAfterAdding)
+            if (!addingEmployee.Quit)
             {
-                MessageBox.Show("OIB mora biti jedinstven");
-                return;
-            }
-            else
-            {
-                var i = 0;
-                foreach (var project in addingEmployee.NewEmployee.ProjectsOfEmployee)
+                _employeeItemRepository.Add(addingEmployee.NewEmployee);
+                AddRefreshListView();
+                var countAfterAdding = chkEmployess.Items.Count;
+                if (countItems == countAfterAdding)
                 {
-                    foreach (var projectAll in ProjectItems)
+                    MessageBox.Show("OIB mora biti jedinstven");
+                    return;
+                }
+                else
+                {
+                    var i = 0;
+                    foreach (var project in addingEmployee.NewEmployee.ProjectsOfEmployee)
                     {
-                        if (projectAll.ProjectName == project)
+                        foreach (var projectAll in ProjectItems)
                         {
-                            projectAll.ListOfEmployees.Add(addingEmployee.NewEmployee);
-                            projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(addingEmployee.NewEmployee,addingEmployee.Hours[i]));
-                            i++;
+                            if (projectAll.ProjectName == project)
+                            {
+                                projectAll.ListOfEmployees.Add(addingEmployee.NewEmployee);
+                                var employeeHours = new Tuple<EmployeeItem, int>(addingEmployee.NewEmployee,
+                                    addingEmployee.Hours[i]);
+                                projectAll.EmployeesWithHours.Add(employeeHours);
+                                i++;
+                            }
                         }
                     }
                 }
@@ -142,21 +148,34 @@ namespace Employees
             if (selectedPerson == null) return;
             var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems, _employeeItemRepository);
             detailsEmployee.ShowDialog();
-            CountingProjectsAfterEdit(selectedPerson, detailsEmployee.Employee, detailsEmployee.Employee.ProjectsOfEmployee);
-            var i = 0;
-            foreach (var project in detailsEmployee.Employee.ProjectsOfEmployee)
+            if (!detailsEmployee.Return)
             {
-                foreach (var projectAll in ProjectItems)
+                CountingProjectsAfterEdit(selectedPerson, detailsEmployee.Employee,
+                    detailsEmployee.Employee.ProjectsOfEmployee);
+                var i = 0;
+                foreach (var project in detailsEmployee.Employee.ProjectsOfEmployee)
                 {
-                    if (projectAll.ProjectName == project)
+                    foreach (var projectAll in ProjectItems)
                     {
-                        projectAll.ListOfEmployees.Add(detailsEmployee.Employee);
-                        projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(detailsEmployee.Employee, detailsEmployee.Hours[i]));
-                        i++;
+                        if (projectAll.ProjectName == project)
+                        {
+                            projectAll.ListOfEmployees.Add(detailsEmployee.Employee);
+                            foreach (var tuple in projectAll.EmployeesWithHours)
+                            {
+                                if (tuple.Item1 != detailsEmployee.Employee)
+                                {
+                                    var employeeHours= new Tuple<EmployeeItem, int>(detailsEmployee.Employee,
+                                        detailsEmployee.Hours[i]);
+                                    projectAll.EmployeesWithHours.Add(employeeHours);
+                                    i++;
+                                }
+                            }
+                        }
                     }
                 }
+
+                AddRefreshListView();
             }
-            AddRefreshListView();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -165,46 +184,49 @@ namespace Employees
             if (selectedPerson == null) return;
             var editTodo = new EditEmployee(selectedPerson, ProjectItems);
             editTodo.ShowDialog();
-            _employeeItemRepository.Edit(editTodo.Employee);
-            CountingProjectsAfterEdit(selectedPerson, editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
-            var i = 0;
-            foreach (var project in editTodo.Employee.ProjectsOfEmployee)
+            if (!editTodo.Quit)
             {
-                foreach (var projectAll in ProjectItems)
+                foreach (var project in ProjectItems)
                 {
-                    if (projectAll.ProjectName == project)
+                        if (project.ListOfEmployees.Contains(selectedPerson))
+                        {
+                            project.ListOfEmployees.Remove(selectedPerson);
+                            var foundTuple =
+                                project.EmployeesWithHours.FirstOrDefault(eri => eri.Item1.Oib == selectedPerson.Oib);
+                            project.EmployeesWithHours.Remove(foundTuple);
+                        }
+                }
+                _employeeItemRepository.Edit(editTodo.Employee);
+                CountingProjectsAfterEdit(selectedPerson, editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
+                var i = 0;
+                foreach (var project in editTodo.Employee.ProjectsOfEmployee)
+                {
+                    foreach (var projectAll in ProjectItems)
                     {
-                        projectAll.ListOfEmployees.Add(editTodo.Employee);
-                        projectAll.EmployeesWithHours.Add(new Tuple<EmployeeItem, int>(editTodo.Employee, editTodo.Hours[i]));
-                        i++;
+                        if (projectAll.ProjectName == project)
+                        {
+                            projectAll.ListOfEmployees.Add(editTodo.Employee);
+                            projectAll.EmployeesWithHours.Add(
+                                new Tuple<EmployeeItem, int>(editTodo.Employee, editTodo.Hours[i]));
+                            i++;
+                        }
                     }
                 }
+
+                AddRefreshListView();
             }
-            AddRefreshListView();
         }
 
         public void CountingProjectsAfterEdit(EmployeeItem selectedPerson,EmployeeItem employee, List<string>projectNames)
         {
-            foreach (var checkedItem in projectNames)
+            foreach (var project in ProjectItems)
             {
-                foreach (var project in ProjectItems)
+                foreach (var checkedItem in projectNames)
                 {
-                    if (project.ListOfEmployees.Contains(selectedPerson))
-                    {
-                        foreach (var employeeWithHours in project.EmployeesWithHours)
-                        {
-                            if (employeeWithHours.Item1 == selectedPerson)
-                                project.EmployeesWithHours.Remove(employeeWithHours);
-                        }
-                        project.ListOfEmployees.Remove(selectedPerson);
-                    }
-
-                    if (project.ProjectName == checkedItem.ToString())
+                    if (project.ProjectName == checkedItem)
                     {
                         if (!project.ListOfEmployees.Contains(employee))
-                        {
                             project.ListOfEmployees.Add(employee);
-                        }
                     }
                 }
             }
