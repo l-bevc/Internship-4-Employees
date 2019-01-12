@@ -32,7 +32,7 @@ namespace Employees
             }           
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             Quit = false;
             var name = txtName.Text;
@@ -61,7 +61,7 @@ namespace Employees
 
                 foreach (var project in NewEmployee.ProjectsOfEmployee)
                 {
-                    var hoursForm= new AddHours(project);
+                    var hoursForm= new AddHours(project, NewEmployee);
                     hoursForm.ShowDialog();
                     Hours.Add(hoursForm.Hours);
                 }
@@ -75,7 +75,7 @@ namespace Employees
             Close();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
+        private void BtnQuit_Click(object sender, EventArgs e)
         {
             Quit = true;
             Close();

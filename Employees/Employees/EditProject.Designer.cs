@@ -57,7 +57,7 @@
             this.btnAddProject.TabIndex = 41;
             this.btnAddProject.Text = "Spremi";
             this.btnAddProject.UseVisualStyleBackColor = true;
-            this.btnAddProject.Click += new System.EventHandler(this.btnAddProject_Click);
+            this.btnAddProject.Click += new System.EventHandler(this.BtnAddProject_Click);
             // 
             // chkEmployees
             // 
@@ -123,7 +123,7 @@
             this.btnQuit.TabIndex = 42;
             this.btnQuit.Text = "Odustani";
             this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            this.btnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
             // 
             // EditProject
             // 

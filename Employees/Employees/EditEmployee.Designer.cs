@@ -61,7 +61,7 @@
             this.btnSave.TabIndex = 29;
             this.btnSave.Text = "Spremi";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // cmbPositions
             // 
@@ -169,7 +169,7 @@
             this.btnQuit.TabIndex = 31;
             this.btnQuit.Text = "Odustani";
             this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            this.btnQuit.Click += new System.EventHandler(this.BtnQuit_Click);
             // 
             // EditEmployee
             // 

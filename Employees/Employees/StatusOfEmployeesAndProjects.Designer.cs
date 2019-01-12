@@ -62,7 +62,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Dodaj zaposlenika";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnDetails
             // 
@@ -72,7 +72,7 @@
             this.btnDetails.TabIndex = 3;
             this.btnDetails.Text = "Detalji";
             this.btnDetails.UseVisualStyleBackColor = true;
-            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
+            this.btnDetails.Click += new System.EventHandler(this.BtnDetails_Click);
             // 
             // btnEdit
             // 
@@ -82,7 +82,7 @@
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Uredi";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -92,7 +92,7 @@
             this.btnDelete.TabIndex = 5;
             this.btnDelete.Text = "Obriši";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // StatusOfEmployeesAndProjects
             // 

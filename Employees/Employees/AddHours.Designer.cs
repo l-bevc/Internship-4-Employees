@@ -31,12 +31,13 @@
             this.txtWorkingHours = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblProject = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
+            this.lblPerson = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtWorkingHours
             // 
-            this.txtWorkingHours.Location = new System.Drawing.Point(75, 44);
+            this.txtWorkingHours.Location = new System.Drawing.Point(74, 54);
             this.txtWorkingHours.Name = "txtWorkingHours";
             this.txtWorkingHours.Size = new System.Drawing.Size(100, 20);
             this.txtWorkingHours.TabIndex = 0;
@@ -58,22 +59,31 @@
             this.lblProject.Size = new System.Drawing.Size(0, 13);
             this.lblProject.TabIndex = 2;
             // 
-            // button1
+            // btnOk
             // 
-            this.button1.Location = new System.Drawing.Point(197, 41);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnOk.Location = new System.Drawing.Point(197, 54);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(75, 23);
+            this.btnOk.TabIndex = 3;
+            this.btnOk.Text = "OK";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.BtnOkClick);
+            // 
+            // lblPerson
+            // 
+            this.lblPerson.AutoSize = true;
+            this.lblPerson.Location = new System.Drawing.Point(33, 30);
+            this.lblPerson.Name = "lblPerson";
+            this.lblPerson.Size = new System.Drawing.Size(0, 13);
+            this.lblPerson.TabIndex = 4;
             // 
             // AddHours
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 98);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lblPerson);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblProject);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtWorkingHours);
@@ -89,6 +99,7 @@
         private System.Windows.Forms.TextBox txtWorkingHours;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblProject;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Label lblPerson;
     }
 }

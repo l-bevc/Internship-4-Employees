@@ -52,7 +52,7 @@
             this.btnDetails.TabIndex = 1;
             this.btnDetails.Text = "Detalji";
             this.btnDetails.UseVisualStyleBackColor = true;
-            this.btnDetails.Click += new System.EventHandler(this.btnDetails_Click);
+            this.btnDetails.Click += new System.EventHandler(this.BtnDetails_Click);
             // 
             // btnAdd
             // 
@@ -62,7 +62,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "Dodaj";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -72,7 +72,7 @@
             this.btnEdit.TabIndex = 3;
             this.btnEdit.Text = "Uredi";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnDelete
             // 
@@ -82,7 +82,7 @@
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Briši";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // btnBack
             // 
@@ -92,7 +92,7 @@
             this.btnBack.TabIndex = 5;
             this.btnBack.Text = "Nazad";
             this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // ListOfProjects
             // 

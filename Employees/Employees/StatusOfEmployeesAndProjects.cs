@@ -72,7 +72,7 @@ namespace Employees
             AddRefreshListView();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             var countItems = chkEmployess.Items.Count;
             var addingEmployee = new AddEmployee(ProjectItems);
@@ -108,7 +108,7 @@ namespace Employees
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             var selectedPerson = chkEmployess.SelectedItem as EmployeeItem;
             if (selectedPerson == null) return;
@@ -142,16 +142,15 @@ namespace Employees
             AddRefreshListView();
         }
 
-        private void btnDetails_Click(object sender, EventArgs e)
+        private void BtnDetails_Click(object sender, EventArgs e)
         {
             var selectedPerson = chkEmployess.SelectedItem as EmployeeItem;
             if (selectedPerson == null) return;
-            var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems, EmployeeItemRepository);
+            var detailsEmployee = new DetailEmployee(selectedPerson, ProjectItems);
             detailsEmployee.ShowDialog();
             if (!detailsEmployee.Return)
             {
-                CountingProjectsAfterEdit(selectedPerson, detailsEmployee.Employee,
-                    detailsEmployee.Employee.ProjectsOfEmployee);
+                CountingProjectsAfterEdit(detailsEmployee.Employee, detailsEmployee.Employee.ProjectsOfEmployee);
                 var i = 0;
                 foreach (var project in detailsEmployee.Employee.ProjectsOfEmployee)
                 {
@@ -164,8 +163,7 @@ namespace Employees
                             {
                                 if (tuple.Item1 != detailsEmployee.Employee)
                                 {
-                                    var employeeHours= new Tuple<EmployeeItem, int>(detailsEmployee.Employee,
-                                        detailsEmployee.Hours[i]);
+                                    var employeeHours= new Tuple<EmployeeItem, int>(detailsEmployee.Employee, detailsEmployee.Hours[i]);
                                     projectAll.EmployeesWithHours.Add(employeeHours);
                                     i++;
                                 }
@@ -173,12 +171,11 @@ namespace Employees
                         }
                     }
                 }
-
                 AddRefreshListView();
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             var selectedPerson = chkEmployess.SelectedItem as EmployeeItem;
             if (selectedPerson == null) return;
@@ -197,7 +194,7 @@ namespace Employees
                         }
                 }
                 EmployeeItemRepository.Edit(editTodo.Employee);
-                CountingProjectsAfterEdit(selectedPerson, editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
+                CountingProjectsAfterEdit(editTodo.Employee, editTodo.Employee.ProjectsOfEmployee);
                 var i = 0;
                 foreach (var project in editTodo.Employee.ProjectsOfEmployee)
                 {
@@ -212,24 +209,12 @@ namespace Employees
                         }
                     }
                 }
-
                 AddRefreshListView();
             }
         }
 
-        public void CountingProjectsAfterEdit(EmployeeItem selectedPerson,EmployeeItem employee, List<string>projectNames)
+        public void CountingProjectsAfterEdit(EmployeeItem employee, List<string>projectNames)
         {
-            foreach (var project in ProjectItems)
-            {
-                foreach (var checkedItem in projectNames)
-                {
-                    if (project.ProjectName == checkedItem)
-                    {
-                        if (!project.ListOfEmployees.Contains(employee))
-                            project.ListOfEmployees.Add(employee);
-                    }
-                }
-            }
             foreach (var projectItem in ProjectItems)
             {
                 if (projectItem.ListOfEmployees.Count == 0)

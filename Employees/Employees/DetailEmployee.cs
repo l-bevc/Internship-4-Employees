@@ -20,14 +20,14 @@ namespace Employees
         public List<int> Hours;
         public EmployeeItem Employee;
         private EmployeeItemRepository EmployeeItemRepository;
-        public DetailEmployee(EmployeeItem selectedEmployee, List<ProjectItem> projects, EmployeeItemRepository employeeItemRepository)
+        public DetailEmployee(EmployeeItem selectedEmployee, List<ProjectItem> projects)
         {
             InitializeComponent();
             Return = false;
             Hours=new List<int>();
             _projectItems = projects;
             Employee = selectedEmployee;
-            EmployeeItemRepository = employeeItemRepository;
+            EmployeeItemRepository = StatusOfEmployeesAndProjects.EmployeeItemRepository;
             var listOfProjects = Projects();
             lstDetails.Items.Add(selectedEmployee.ToString());
             lstDetails.Items.Add("PROJEKTI:");
@@ -72,7 +72,7 @@ namespace Employees
             return listPastProgressFutureProject;
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             var editTodo = new EditEmployee(Employee, _projectItems);
             editTodo.ShowDialog();
@@ -81,7 +81,7 @@ namespace Employees
             Close();
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private void BtnBack_Click(object sender, EventArgs e)
         {
             Return = true;
             Close();

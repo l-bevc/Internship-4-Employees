@@ -35,7 +35,7 @@ namespace Employees
             }
         }
 
-        private void btnAddProject_Click(object sender, EventArgs e)
+        private void BtnAddProject_Click(object sender, EventArgs e)
         {
             Quit = false;
             var name = txtName.Text;
@@ -51,7 +51,7 @@ namespace Employees
                          if (employee.Oib == checkedItem.ToString().Split(' ')[0])
                          {
                             NewProject.ListOfEmployees.Add(employee);
-                            var hoursForm = new AddHours(name);
+                            var hoursForm = new AddHours(name, employee);
                             hoursForm.ShowDialog();
                             Hours.Add(hoursForm.Hours);
                             employee.WorkingHours = hoursForm.Hours;
@@ -70,7 +70,7 @@ namespace Employees
             Close();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
+        private void BtnQuit_Click(object sender, EventArgs e)
         {
             Quit = true;
             Close();

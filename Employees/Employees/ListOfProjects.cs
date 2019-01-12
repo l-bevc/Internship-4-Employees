@@ -37,7 +37,7 @@ namespace Employees
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             var itemToAdd = new AddForm(ListofProjectItems, ListOfEmployeeItems);
             itemToAdd.ShowDialog();
@@ -48,7 +48,7 @@ namespace Employees
             }
         }
 
-        private void btnDetails_Click(object sender, EventArgs e)
+        private void BtnDetails_Click(object sender, EventArgs e)
         {
             var selectedProject = chkProjects.SelectedItem as ProjectItem;
             if (selectedProject == null) return;
@@ -56,7 +56,7 @@ namespace Employees
             detailsProject.ShowDialog();
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             var selectedProject = chkProjects.SelectedItem as ProjectItem;
             if (selectedProject == null) return;
@@ -79,7 +79,7 @@ namespace Employees
             AddRefreshListView();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             var selectedProject = chkProjects.SelectedItem as ProjectItem;
             if (selectedProject== null) return;
@@ -92,7 +92,7 @@ namespace Employees
             }
         }
 
-        private void btnBack_Click(object sender, EventArgs e)
+        private void BtnBack_Click(object sender, EventArgs e)
         {
             Back = true;
             AddRefreshListView();

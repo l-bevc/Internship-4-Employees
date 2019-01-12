@@ -48,7 +48,7 @@
             this.btnBack.TabIndex = 1;
             this.btnBack.Text = "Nazad";
             this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
             // DetailProject
             // 
